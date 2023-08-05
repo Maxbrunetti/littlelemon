@@ -1,18 +1,18 @@
 import BookingForm from './BookingForm';
 import { useReducer, useState, useEffect } from 'react';
+let availableTimes;
 
 function reducer(state, action) {
-  const selectedDate = state.find(value => value.date === action.date);
-  console.log(selectedDate);
+  const selectedDate = availableTimes.find(value => value.date === action.date);
   if (!selectedDate || !action.time) {
     return state;
   }
-  if (action.time === '17:00') return (selectedDate.five = false);
-  if (action.time === '18:00') return (selectedDate.six = false);
-  if (action.time === '19:00') return (selectedDate.seven = false);
-  if (action.time === '20:00') return (selectedDate.eight = false);
-  if (action.time === '21:00') return (selectedDate.nine = false);
-  if (action.time === '22:00') return (selectedDate.ten = false);
+  if (action.time === '17:00') selectedDate.five = false;
+  if (action.time === '18:00') selectedDate.six = false;
+  if (action.time === '19:00') selectedDate.seven = false;
+  if (action.time === '20:00') selectedDate.eight = false;
+  if (action.time === '21:00') selectedDate.nine = false;
+  if (action.time === '22:00') selectedDate.ten = false;
   return state;
 }
 
@@ -24,8 +24,6 @@ function formatDate(date) {
 }
 
 function Reservations() {
-  const [availableTimes, setAvailableTimes] = useState([]);
-
   useEffect(() => {
     function initializeTimes() {
       const today = new Date();
@@ -45,7 +43,7 @@ function Reservations() {
           ten: true,
         });
       }
-      setAvailableTimes(times);
+      availableTimes = times;
       console.log(times);
     }
     initializeTimes();
