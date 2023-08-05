@@ -5,7 +5,6 @@ import NavBar from './NavBar';
 import bruschettaImage from './images/bruchetta.jpg';
 import greekSaladImage from './images/greek-salad.jpg';
 import lemonDessertImage from './images/lemon-dessert.jpg';
-
 import SpecialItem from './SpecialItem';
 /** @jsxImportSource react */
 
