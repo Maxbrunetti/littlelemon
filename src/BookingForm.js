@@ -1,7 +1,25 @@
+import React from 'react';
 import './BookingForm.css';
-import { useState } from 'react';
 
-function BookingForm({ formValues, setFormValues, handleSubmit }) {
+function BookingForm({
+  formValues,
+  setFormValues,
+  handleSubmit,
+  availableTimes,
+}) {
+  const selectedDate = availableTimes.find(
+    date => date.date === formValues.date
+  );
+  const availableTimeOptions = selectedDate
+    ? Object.keys(selectedDate)
+        .filter(key => key !== 'date' && selectedDate[key])
+        .map(key => (
+          <option key={key} value={key}>
+            {key.slice(0, 2) + key.slice(2)}
+          </option>
+        ))
+    : [];
+
   return (
     <form className="bookingForm" onSubmit={handleSubmit}>
       <label htmlFor="res-date">Choose date</label>
@@ -13,18 +31,12 @@ function BookingForm({ formValues, setFormValues, handleSubmit }) {
       />
       <label htmlFor="res-time">Choose time</label>
       <select
-        id="res-time "
-        onChange={e => {
-          setFormValues({ ...formValues, time: e.target.value });
-          console.log(formValues);
-        }}
+        id="res-time"
+        value={formValues.time}
+        onChange={e => setFormValues({ ...formValues, time: e.target.value })}
       >
-        <option>17:00</option>
-        <option>18:00</option>
-        <option>19:00</option>
-        <option>20:00</option>
-        <option>21:00</option>
-        <option>22:00</option>
+        <option value="">Select a time</option>
+        {availableTimeOptions}
       </select>
       <label htmlFor="guests">Number of guests</label>
       <input
@@ -33,18 +45,20 @@ function BookingForm({ formValues, setFormValues, handleSubmit }) {
         min="1"
         max="10"
         id="guests"
+        value={formValues.guest}
         onChange={e => setFormValues({ ...formValues, guest: e.target.value })}
       />
       <label htmlFor="occasion">Occasion</label>
       <select
         id="occasion"
-        onChange={e => {
-          setFormValues({ ...formValues, occasion: e.target.value });
-          console.log(formValues);
-        }}
+        value={formValues.occasion}
+        onChange={e =>
+          setFormValues({ ...formValues, occasion: e.target.value })
+        }
       >
-        <option>Birthday</option>
-        <option>Anniversary</option>
+        <option value="">Select an occasion</option>
+        <option value="Birthday">Birthday</option>
+        <option value="Anniversary">Anniversary</option>
       </select>
       <input type="submit" value="Make Your reservation" />
     </form>

@@ -1,19 +1,19 @@
+import { useState, useEffect, useReducer } from 'react';
 import BookingForm from './BookingForm';
-import { useReducer, useState, useEffect } from 'react';
-let availableTimes;
 
 function reducer(state, action) {
-  const selectedDate = availableTimes.find(value => value.date === action.date);
-  if (!selectedDate || !action.time) {
-    return state;
-  }
-  if (action.time === '17:00') selectedDate.five = false;
-  if (action.time === '18:00') selectedDate.six = false;
-  if (action.time === '19:00') selectedDate.seven = false;
-  if (action.time === '20:00') selectedDate.eight = false;
-  if (action.time === '21:00') selectedDate.nine = false;
-  if (action.time === '22:00') selectedDate.ten = false;
-  return state;
+  const newState = state.map(date => {
+    if (date.date === action.date) {
+      return {
+        ...date,
+        [action.time]: false,
+      };
+    }
+
+    return date;
+  });
+
+  return newState;
 }
 
 function formatDate(date) {
@@ -24,6 +24,25 @@ function formatDate(date) {
 }
 
 function Reservations() {
+  const [btcData, setBtcData] = useState({});
+
+  const fetchData = () => {
+    fetch(
+      `https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js`
+    )
+      .then(response => response.json())
+      .then(jsonData => setBtcData(jsonData))
+      .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log(btcData);
+  }, []);
+
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [state, dispatch] = useReducer(reducer, availableTimes);
+
   useEffect(() => {
     function initializeTimes() {
       const today = new Date();
@@ -35,25 +54,20 @@ function Reservations() {
 
         times.push({
           date: datestr,
-          five: true,
-          six: true,
-          seven: true,
-          eight: true,
-          nine: true,
-          ten: true,
+          '17:00': true,
+          '18:00': true,
+          '19:00': true,
+          '20:00': true,
+          '21:00': true,
+          '22:00': true,
         });
       }
-      availableTimes = times;
+      setAvailableTimes(times);
+
       console.log(times);
     }
     initializeTimes();
   }, []);
-
-  const [state, times] = useReducer(reducer, availableTimes);
-
-  function updateTimes(time) {
-    return time;
-  }
 
   const [formValues, setFormValues] = useState({
     date: '',
@@ -64,7 +78,7 @@ function Reservations() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    times(formValues);
+    dispatch(formValues);
     console.log(availableTimes);
   }
 
