@@ -1,11 +1,14 @@
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './NavBar';
 
 import bruschettaImage from './images/bruchetta.jpg';
 import greekSaladImage from './images/greek-salad.jpg';
 import lemonDessertImage from './images/lemon-dessert.jpg';
 import SpecialItem from './SpecialItem';
+import ConfirmedBooking from './ConfirmedBooking';
 
 /** @jsxImportSource react */
 
@@ -36,14 +39,17 @@ tomatoes, oregano and fresh bazil.
 
 function App() {
   return (
-    <Router>
-      <>
+    <>
+      <Router>
         <meta name="og:title" content="Little Lemon restaurant" />
         <meta name="og:description" content="serving Italian food since 2019" />
         <meta name="og:image" content="" />
         <header></header>
         <NavBar />
         <main>
+          <Routes>
+            <Route path="/confirmedbooking" element={<ConfirmedBooking />} />
+          </Routes>
           <section className="bg-green">
             <div className="w60 g1fr">
               <div className="color-light">
@@ -77,8 +83,8 @@ function App() {
           </section>
         </main>
         <footer></footer>
-      </>
-    </Router>
+      </Router>
+    </>
   );
 }
 

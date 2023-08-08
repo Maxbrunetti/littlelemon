@@ -1,5 +1,8 @@
 import { useState, useEffect, useReducer } from 'react';
 import BookingForm from './BookingForm';
+import { useNavigate, Route, Routes } from 'react-router-dom';
+
+import ConfirmedBooking from './ConfirmedBooking';
 
 function reducer(state, action) {
   const newState = state.map(date => {
@@ -24,50 +27,39 @@ function formatDate(date) {
 }
 
 function Reservations() {
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const navigate = useNavigate();
+
   const [btcData, setBtcData] = useState({});
-
-  const fetchData = () => {
-    fetch(
-      `https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js`
-    )
-      .then(response => response.json())
-      .then(jsonData => setBtcData(jsonData))
-      .catch(error => console.log(error));
-  };
+  const [state, dispatch] = useReducer(reducer, initializeTimes());
 
   useEffect(() => {
-    fetchData();
-    console.log(btcData);
-  }, []);
-
-  const [availableTimes, setAvailableTimes] = useState([]);
-  const [state, dispatch] = useReducer(reducer, availableTimes);
-
-  useEffect(() => {
-    function initializeTimes() {
-      const today = new Date();
-      const times = [];
-      for (let i = 0; i < 14; i++) {
-        const nextDay = new Date(today);
-        nextDay.setDate(nextDay.getDate() + i);
-        const datestr = formatDate(nextDay);
-
-        times.push({
-          date: datestr,
-          '17:00': true,
-          '18:00': true,
-          '19:00': true,
-          '20:00': true,
-          '21:00': true,
-          '22:00': true,
-        });
-      }
-      setAvailableTimes(times);
-
-      console.log(times);
+    const storedData = localStorage.getItem('data');
+    if (storedData) {
+      dispatch(JSON.parse(storedData));
     }
-    initializeTimes();
   }, []);
+
+  function initializeTimes() {
+    const today = new Date();
+    const times = [];
+    for (let i = 0; i < 14; i++) {
+      const nextDay = new Date(today);
+      nextDay.setDate(nextDay.getDate() + i);
+      const datestr = formatDate(nextDay);
+
+      times.push({
+        date: datestr,
+        '17:00': true,
+        '18:00': true,
+        '19:00': true,
+        '20:00': true,
+        '21:00': true,
+        '22:00': true,
+      });
+    }
+    return times;
+  }
 
   const [formValues, setFormValues] = useState({
     date: '',
@@ -79,18 +71,26 @@ function Reservations() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(formValues);
-    console.log(availableTimes);
+    localStorage.setItem('data', JSON.stringify(state));
+    setBookingConfirmed(true);
+    navigate('/confirmedbooking');
   }
 
   return (
-    <section>
-      <BookingForm
-        formValues={formValues}
-        setFormValues={setFormValues}
-        handleSubmit={handleSubmit}
-        availableTimes={availableTimes}
+    <Routes>
+      <Route path="/confirmedbooking" element={<ConfirmedBooking />} />
+      <Route
+        path="/"
+        element={
+          <BookingForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleSubmit={handleSubmit}
+            state={state}
+          />
+        }
       />
-    </section>
+    </Routes>
   );
 }
 

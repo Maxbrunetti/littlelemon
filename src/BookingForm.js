@@ -1,21 +1,16 @@
 import React from 'react';
 import './BookingForm.css';
+import { useHistory } from 'react-router-dom';
 
-function BookingForm({
-  formValues,
-  setFormValues,
-  handleSubmit,
-  availableTimes,
-}) {
-  const selectedDate = availableTimes.find(
-    date => date.date === formValues.date
-  );
+function BookingForm({ formValues, setFormValues, handleSubmit, state }) {
+  const selectedDate = state.find(date => date.date === formValues.date);
+
   const availableTimeOptions = selectedDate
-    ? Object.keys(selectedDate)
-        .filter(key => key !== 'date' && selectedDate[key])
-        .map(key => (
-          <option key={key} value={key}>
-            {key.slice(0, 2) + key.slice(2)}
+    ? Object.entries(selectedDate)
+        .filter(value => value[0] !== 'date' && selectedDate[value[0]])
+        .map(value => (
+          <option key={Math.random()} disabled={!value[1]}>
+            {value[0]}
           </option>
         ))
     : [];
