@@ -8,5 +8,3 @@ test('renders BookingForm component', () => {
   const submitButton = screen.getByText('Make Your reservation');
   expect(submitButton).toBeInTheDocument();
 });
-
-// Add more test cases as needed

@@ -4,7 +4,7 @@ import Home from './Home';
 import Menu from './Menu';
 import Reservations from './Reservations';
 import Order from './Order';
-import ConfirmedBooking from './ConfirmedBooking';
+
 function NavBar() {
   return (
     <nav className="nav w60 g1fr">

@@ -27,10 +27,8 @@ function formatDate(date) {
 }
 
 function Reservations() {
-  const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const navigate = useNavigate();
 
-  const [btcData, setBtcData] = useState({});
   const [state, dispatch] = useReducer(reducer, initializeTimes());
 
   useEffect(() => {
@@ -72,7 +70,6 @@ function Reservations() {
     e.preventDefault();
     dispatch(formValues);
     localStorage.setItem('data', JSON.stringify(state));
-    setBookingConfirmed(true);
     navigate('/confirmedbooking');
   }
 

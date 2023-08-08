@@ -1,6 +1,5 @@
 import React from 'react';
-import './BookingForm.css';
-import { useHistory } from 'react-router-dom';
+// import './BookingForm.css';
 
 function BookingForm({ formValues, setFormValues, handleSubmit, state }) {
   const selectedDate = state.find(date => date.date === formValues.date);

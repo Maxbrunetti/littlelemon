@@ -1,5 +1,4 @@
 import './App.css';
-import { useHistory } from 'react-router-dom';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './NavBar';
