@@ -1,20 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import './BookingForm.css';
-import * as Yup from 'yup';
 import useSubmit from './hooks/useSubmit';
 import {
-  Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
   Input,
   Select,
-  Textarea,
-  VStack,
 } from '@chakra-ui/react';
-import { Form } from 'react-router-dom';
 
 function BookingForm({
   formValues,
@@ -23,7 +17,7 @@ function BookingForm({
   state,
   formik,
 }) {
-  const { isLoading, response, submit } = useSubmit();
+  const { isLoading } = useSubmit();
 
   const selectedDate = state.find(date => date.date === formValues.date);
 
@@ -38,22 +32,36 @@ function BookingForm({
     : [];
 
   return (
-    <form className="bookingForm" onSubmit={handleSubmit}>
-      <FormControl isInvalid={formik.touched.date && formik.errors.date}>
-        <FormLabel htmlFor="date">Choose date</FormLabel>
+    <form className={'bookingForm'} onSubmit={handleSubmit}>
+      <FormControl
+        className={'formControl'}
+        isInvalid={formik.touched.date && formik.errors.date}
+      >
+        <FormLabel className={'formLabel'} htmlFor="date">
+          Choose date
+        </FormLabel>
         <Input
+          className={'inputField'}
           type="date"
           id="date"
           value={formValues.date}
           onChange={e => setFormValues({ ...formValues, date: e.target.value })}
           {...formik.getFieldProps('date')}
         />
-        <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
+        <FormErrorMessage className={'errorMessage'}>
+          {formik.errors.date}
+        </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={formik.touched.time && formik.errors.time}>
-        <FormLabel htmlFor="time">Choose time</FormLabel>
+      <FormControl
+        className={'formControl'}
+        isInvalid={formik.touched.time && formik.errors.time}
+      >
+        <FormLabel className={'formLabel'} htmlFor="time">
+          Choose time
+        </FormLabel>
         <Select
+          className={'selectField'}
           id="time"
           value={formValues.time}
           onChange={e => setFormValues({ ...formValues, time: e.target.value })}
@@ -62,12 +70,20 @@ function BookingForm({
           <option value="">Select a time</option>
           {availableTimeOptions}
         </Select>
-        <FormErrorMessage>{formik.errors.time}</FormErrorMessage>
+        <FormErrorMessage className={'errorMessage'}>
+          {formik.errors.time}
+        </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={formik.touched.guests && formik.errors.guests}>
-        <FormLabel htmlFor="guests">Number of guests</FormLabel>
-        <input
+      <FormControl
+        className={'formControl'}
+        isInvalid={formik.touched.guests && formik.errors.guests}
+      >
+        <FormLabel className={'formLabel'} htmlFor="guests">
+          Number of guests
+        </FormLabel>
+        <Input
+          className={'inputField'}
           type="number"
           placeholder="1"
           min="1"
@@ -79,14 +95,20 @@ function BookingForm({
           }
           {...formik.getFieldProps('guests')}
         />{' '}
-        <FormErrorMessage>{formik.errors.guests}</FormErrorMessage>
+        <FormErrorMessage className={'errorMessage'}>
+          {formik.errors.guests}
+        </FormErrorMessage>
       </FormControl>
 
       <FormControl
+        className={'formControl'}
         isInvalid={formik.touched.occasion && formik.errors.occasion}
       >
-        <FormLabel htmlFor="occasion">Occasion</FormLabel>
-        <select
+        <FormLabel className={'formLabel'} htmlFor="occasion">
+          Occasion
+        </FormLabel>
+        <Select
+          className={'selectField'}
           id="occasion"
           value={formValues.occasion}
           onChange={e =>
@@ -94,17 +116,14 @@ function BookingForm({
           }
           {...formik.getFieldProps('occasion')}
         >
-          {/* <option value="">Select an occasion</option> */}
+          <option value="">Select an occasion</option>
           <option value="Birthday">Birthday</option>
           <option value="Anniversary">Anniversary</option>
-        </select>{' '}
-        <FormErrorMessage></FormErrorMessage>
+        </Select>
+        <FormErrorMessage className={'errorMessage'}></FormErrorMessage>
       </FormControl>
 
-      <Button
-        type="submit"
-        isLoading={isLoading} // Consider using the isLoading state from useSubmit hook
-      >
+      <Button type="submit" isLoading={isLoading} className="btn">
         Submit
       </Button>
     </form>

@@ -1,9 +1,9 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useReducer } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import BookingForm from './BookingForm';
 import useSubmit from './hooks/useSubmit';
-import { useNavigate, Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function reducer(state, action) {
   const newState = state.map(date => {
@@ -28,7 +28,7 @@ function formatDate(date) {
 }
 
 function Reservations() {
-  const { isLoading, response, submit } = useSubmit();
+  const { isLoading, submit } = useSubmit();
 
   const navigate = useNavigate();
 
@@ -111,6 +111,7 @@ function Reservations() {
       handleSubmit={handleSubmit}
       state={state}
       formik={formik}
+      isLoading={isLoading}
     />
   );
 }

@@ -1,0 +1,52 @@
+:root {
+  --primary-color: #495e57;
+  --accent-color: #f4ce14;
+  --light-color: #ffffff;
+  --dark-color: #0000000;
+}
+
+.menuContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menuTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.menuTable th,
+.menuTable td {
+  padding: 10px;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.menuTable th {
+  text-align: left;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.menuTable td {
+  font-size: 16px;
+  color: var(--dark-color);
+}
+
+.menuTable tr:nth-child(even) {
+  background-color: var(--light-color);
+}
+
+.menuTable tr:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  cursor: pointer;
+}

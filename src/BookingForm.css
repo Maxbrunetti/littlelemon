@@ -1,5 +1,62 @@
+/* BookingForm.css */
+:root {
+  --primary-color: #495e57;
+  --accent-color: #f4ce14;
+  --light-color: #ffffff;
+  --dark-color: #0000000;
+}
+
 .bookingForm {
-  display: grid;
-  max-width: 200px;
-  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formControl {
+  width: 100%; /* Ensure the controls take up the full width */
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  max-width: 600px; /* Set max-width for the label */
+}
+
+.inputField,
+.selectField {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  transition: border-color 0.3s ease;
+}
+
+.inputField:focus,
+.selectField:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Set focus border color */
+}
+
+.inputField[type='number']::-webkit-inner-spin-button,
+.inputField[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 4px;
 }

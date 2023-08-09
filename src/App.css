@@ -1,3 +1,10 @@
+:root {
+  --primary-color: #495e57;
+  --accent-color: #f4ce14;
+  --light-color: #ffffff;
+  --dark-color: #0000000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -21,15 +28,37 @@ h3 {
 }
 
 h1 {
-  color: #f4ce14;
+  color: var(--accent-color);
 }
 p {
+  font-size: 18px;
+  padding: 10px 0;
   line-height: 1.3;
 }
 
 img {
   max-width: 100%;
   max-height: 100%;
+}
+
+footer {
+  background: var(--primary-color);
+  color: var(--light-color);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--primary-color);
+}
+
+.active {
+  color: var(--accent-color) !important; /* Active link color */
 }
 
 .w60 {
@@ -52,6 +81,10 @@ img {
   margin-top: 20px;
 }
 
+.mb-20 {
+  margin-bottom: 50px;
+}
+
 .color-light {
   color: #ffffff;
 }
@@ -61,18 +94,31 @@ img {
   justify-content: space-between;
 }
 
+.white {
+  color: white;
+}
 .nav {
   padding: 20px 0;
+  display: flex;
+  max-height: 70px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
 }
 
 .nav-items {
   list-style: none;
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 .nav-items a {
   text-decoration: none;
+}
+.nav-logo img {
+  max-width: 100%; /* Add this line */
+  max-height: 100%; /* Add this line */
+  height: auto; /* Maintain the aspect ratio */
 }
 
 .main {
@@ -83,15 +129,23 @@ img {
 .btn {
   padding: 20px 30px;
   border-radius: 3px;
-  background-color: #f4ce14;
+  background-color: var(--accent-color);
   color: #000000;
   cursor: pointer;
   font-weight: 600;
-  border: none;
+  border: 2px solid var(--primary-color);
+  transition: ease-in-out 0.3s;
+}
+
+.btn:hover {
+  color: var(--accent-color);
+  background-color: var(--primary-color);
+  border: 2px solid var(--accent-color);
+  transition: ease-in-out 0.3s;
 }
 
 .bg-green {
-  background-color: #495e57;
+  background-color: var(--primary-color);
   margin: auto;
 }
 
@@ -105,7 +159,7 @@ img {
 .special-item {
   border-radius: 13px;
   background: #edefee;
-  box-shadow: 2px 2px 2px black;
+  box-shadow: 2px 2px 2px var(--dark-color);
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
@@ -119,7 +173,7 @@ img {
 .special-item img {
   border-top-left-radius: 13px;
   border-top-right-radius: 13px;
-  border: 1px solid black;
+  border: 1px solid var(--dark-color);
   object-fit: cover;
   height: 100%;
   margin-bottom: 20px;

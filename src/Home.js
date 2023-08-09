@@ -4,6 +4,7 @@ import bruschettaImage from './images/bruchetta.jpg';
 import greekSaladImage from './images/greek-salad.jpg';
 import lemonDessertImage from './images/lemon-dessert.jpg';
 import './App.css';
+import { Link } from 'react-router-dom';
 
 const items = [
   {
@@ -39,16 +40,15 @@ function Home() {
             <p>
               <strong>Chicago</strong>
             </p>
-            <p className="pt-20">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="pt-20 mb-20">
+              Our menu is a delightful fusion of traditional recipes passed down
+              through generations and innovative culinary creations. We source
+              the finest, locally sourced ingredients to craft dishes that
+              tantalize your taste buds and warm your heart.
             </p>
-            <button
-              onClick={() => console.log('clicked')}
-              className="btn btn-light pt-20 mt-20"
-            >
+            <Link to="/reservations" className="btn pt-20 mt-20">
               Reserve a table
-            </button>
+            </Link>
           </div>
           <img
             src={require('./images/restaurant chef B.jpg')}
@@ -59,7 +59,9 @@ function Home() {
       <section className="w60">
         <div className="flex-end">
           <h2>Specials</h2>
-          <button className="btn btn-light">Order Menu</button>
+          <Link to="/menu" className="btn btn-light pt-20 mt-20">
+            See Menu
+          </Link>
         </div>
         <SpecialItem items={items} />
       </section>
