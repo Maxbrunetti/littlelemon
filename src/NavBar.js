@@ -1,9 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import About from './About';
-import Home from './Home';
-import Menu from './Menu';
-import Reservations from './Reservations';
-import Order from './Order';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   return (
@@ -36,39 +31,8 @@ function NavBar() {
           </Link>
         </li>
       </ul>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/reservations" element={<Reservations />} />
-        <Route path="/order" element={<Order />} />
-      </Routes>
     </nav>
   );
 }
-// function NavBar() {
-//   return (
-//     <nav className="nav w60 g1fr">
-//       <img className="nav-logo" src="" alt="logo" />
-//       <ul className="nav-items">
-//         <li>
-//           <a href="/">Home</a>
-//         </li>
-//         <li>
-//           <a href="/">About</a>
-//         </li>
-//         <li>
-//           <a href="/">Menu</a>
-//         </li>
-//         <li>
-//           <a href="/">Reservations</a>
-//         </li>
-//         <li>
-//           <a href="/">Order online</a>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// }
 
 export default NavBar;

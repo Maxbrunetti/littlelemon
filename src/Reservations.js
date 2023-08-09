@@ -1,8 +1,9 @@
 import { useState, useEffect, useReducer } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import BookingForm from './BookingForm';
+import useSubmit from './hooks/useSubmit';
 import { useNavigate, Route, Routes } from 'react-router-dom';
-
-import ConfirmedBooking from './ConfirmedBooking';
 
 function reducer(state, action) {
   const newState = state.map(date => {
@@ -15,7 +16,7 @@ function reducer(state, action) {
 
     return date;
   });
-
+  console.log(state);
   return newState;
 }
 
@@ -27,16 +28,18 @@ function formatDate(date) {
 }
 
 function Reservations() {
+  const { isLoading, response, submit } = useSubmit();
+
   const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(reducer, initializeTimes());
 
-  useEffect(() => {
-    const storedData = localStorage.getItem('data');
-    if (storedData) {
-      dispatch(JSON.parse(storedData));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem('data');
+  //   if (storedData) {
+  //     dispatch(JSON.parse(storedData));
+  //   }
+  // }, []);
 
   function initializeTimes() {
     const today = new Date();
@@ -60,10 +63,39 @@ function Reservations() {
   }
 
   const [formValues, setFormValues] = useState({
-    date: '',
+    date: formatDate(new Date()),
     time: '',
-    guest: '',
+    guest: 1,
     occasion: '',
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      date: formValues.date,
+      time: formValues.time,
+      guests: formValues.guest,
+      occasion: formValues.occasion,
+    },
+    onSubmit: values => {
+      submit('/', values);
+    },
+
+    validationSchema: Yup.object({
+      date: Yup.string()
+        .required('Date required')
+        .matches(
+          /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/,
+          'Reservation date must be DD-MM-YYYY'
+        ),
+      time: Yup.string()
+        .required('Choose a time')
+        .matches(/^(?:[01]\d|2[0-3]):[0-5]\d$/),
+      guests: Yup.string()
+        .required('Required')
+        .min(1, 'Minimum number of guests is 1')
+        .max(10, 'Maximum number of guests is 20'),
+      occasion: Yup.string().required('Required'),
+    }),
   });
 
   function handleSubmit(e) {
@@ -72,22 +104,14 @@ function Reservations() {
     localStorage.setItem('data', JSON.stringify(state));
     navigate('/confirmedbooking');
   }
-
   return (
-    <Routes>
-      <Route path="/confirmedbooking" element={<ConfirmedBooking />} />
-      <Route
-        path="/"
-        element={
-          <BookingForm
-            formValues={formValues}
-            setFormValues={setFormValues}
-            handleSubmit={handleSubmit}
-            state={state}
-          />
-        }
-      />
-    </Routes>
+    <BookingForm
+      formValues={formValues}
+      setFormValues={setFormValues}
+      handleSubmit={handleSubmit}
+      state={state}
+      formik={formik}
+    />
   );
 }
 
