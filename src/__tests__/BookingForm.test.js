@@ -5,8 +5,6 @@ import BookingForm from '../BookingForm';
 
 test('renders BookingForm component', () => {
   render(<BookingForm />);
-  const submitButton = screen.getByText('Make Your reservation');
+  const submitButton = screen.getByText('Submit');
   expect(submitButton).toBeInTheDocument();
 });
-
-// Add more test cases as needed

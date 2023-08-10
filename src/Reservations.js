@@ -28,7 +28,7 @@ function formatDate(date) {
 }
 
 function Reservations() {
-  const { isLoading, submit } = useSubmit();
+  const { submit } = useSubmit();
 
   const navigate = useNavigate();
 
@@ -100,9 +100,11 @@ function Reservations() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(formValues);
-    localStorage.setItem('data', JSON.stringify(state));
-    navigate('/confirmedbooking');
+    setTimeout(() => {
+      dispatch(formValues);
+      localStorage.setItem('data', JSON.stringify(state));
+      navigate('/confirmedbooking');
+    }, 1000);
   }
   return (
     <BookingForm
@@ -111,7 +113,6 @@ function Reservations() {
       handleSubmit={handleSubmit}
       state={state}
       formik={formik}
-      isLoading={isLoading}
     />
   );
 }
